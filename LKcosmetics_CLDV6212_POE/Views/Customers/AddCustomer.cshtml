@@ -1,0 +1,19 @@
+﻿@model LKcosmetics_CLDV6212_POE.Models.Customer
+
+<h1>Add Customer</h1>
+
+<form asp-action="AddCustomer" method="post">
+    <div class="mb-3">
+        <label>Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Phone</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Add Customer</button>
+</form>

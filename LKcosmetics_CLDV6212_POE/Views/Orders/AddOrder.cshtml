@@ -1,0 +1,23 @@
+﻿@model LKcosmetics_CLDV6212_POE.Models.Order
+
+<h1>Add Order</h1>
+
+<form asp-action="AddOrder" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label>Customer Id</label>
+        <input asp-for="CustomerId" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Order Date</label>
+        <input asp-for="OrderDate" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Total Amount</label>
+        <input asp-for="TotalAmount" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Upload File</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Add Order</button>
+</form>

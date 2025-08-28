@@ -1,0 +1,57 @@
+﻿@model IEnumerable<LKcosmetics_CLDV6212_POE.Models.Product>
+
+<div style="background-color:#f2f2f2; padding:20px; min-height:100vh;">
+    <h1 style="color:#00796B; margin-bottom:20px;">Products</h1>
+
+    <a asp-action="AddProduct"
+       style="background-color:#00796B; color:white; border:none; padding:6px 12px; text-decoration:none; display:inline-block; margin-bottom:10px;">
+        Add Product
+    </a>
+
+    <table class="table table-striped" style="background-color:white;">
+        <thead style="background-color:#004D40; color:white;">
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr style="background-color:#e0f2f1;">
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="@product.ImageUrl" alt="@product.Name" width="100" />
+                        }
+                    </td>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price</td>
+                    <td>@product.Stock</td>
+                    <td>
+                        <a asp-action="Edit"
+                           asp-route-partitionKey="@product.PartitionKey"
+                           asp-route-rowKey="@product.RowKey"
+                           style="background-color:#00796B; color:white; border:none; padding:4px 8px; text-decoration:none; margin-right:4px;">
+                            Edit
+                        </a>
+
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="partitionKey" value="@product.PartitionKey" />
+                            <input type="hidden" name="rowKey" value="@product.RowKey" />
+                            <input type="hidden" name="imageUrl" value="@product.ImageUrl" />
+                            <button type="submit" style="background-color:#00796B; color:white; border:none; padding:4px 8px;">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

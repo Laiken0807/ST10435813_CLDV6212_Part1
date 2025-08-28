@@ -1,0 +1,47 @@
+﻿@model IEnumerable<LKcosmetics_CLDV6212_POE.Models.Customer>
+
+<div style="background-color:#f2f2f2; padding:20px; min-height:100vh;">
+    <h1 style="color:#00796B; margin-bottom:20px;">Customers</h1>
+
+    <a asp-action="AddCustomer"
+       style="background-color:#00796B; color:white; border:none; padding:6px 12px; text-decoration:none; display:inline-block; margin-bottom:10px;">
+        Add Customer
+    </a>
+
+    <table class="table table-striped" style="background-color:white;">
+        <thead style="background-color:#004D40; color:white;">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr style="background-color:#e0f2f1;">
+                    <td>@customer.Name</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.Phone</td>
+                    <td>
+                        <a asp-action="Edit"
+                           asp-route-partitionKey="@customer.PartitionKey"
+                           asp-route-rowKey="@customer.RowKey"
+                           style="background-color:#00796B; color:white; border:none; padding:4px 8px; text-decoration:none; margin-right:4px;">
+                            Edit
+                        </a>
+
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="partitionKey" value="@customer.PartitionKey" />
+                            <input type="hidden" name="rowKey" value="@customer.RowKey" />
+                            <button type="submit" style="background-color:#00796B; color:white; border:none; padding:4px 8px;">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<LKcosmetics_CLDV6212_POE.Models.Order>
+
+<div style="background-color:#f2f2f2; padding:20px; min-height:100vh;">
+    <h1 style="color:#00796B; margin-bottom:20px;">Orders</h1>
+
+    <a asp-action="AddOrder"
+       style="background-color:#00796B; color:white; border:none; padding:6px 12px; text-decoration:none; display:inline-block; margin-bottom:10px;">
+        Add Order
+    </a>
+
+    <table class="table table-striped" style="background-color:white;">
+        <thead style="background-color:#004D40; color:white;">
+            <tr>
+                <th>CustomerId</th>
+                <th>Order Date</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>File</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr style="background-color:#e0f2f1;">
+                    <td>@order.CustomerId</td>
+                    <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                    <td>@order.TotalAmount</td>
+                    <td>
+                        <form asp-action="UpdateStatus" method="post" style="display:flex; align-items:center;">
+                            <input type="hidden" name="partitionKey" value="@order.PartitionKey" />
+                            <input type="hidden" name="rowKey" value="@order.RowKey" />
+                            <select name="newStatus" style="margin-right:5px; padding:4px; border-radius:4px; border:1px solid #00796B;">
+                                <option value="Pending" selected="@("Pending" == order.Status)">Pending</option>
+                                <option value="Processing" selected="@("Processing" == order.Status)">Processing</option>
+                                <option value="Completed" selected="@("Completed" == order.Status)">Completed</option>
+                                <option value="Cancelled" selected="@("Cancelled" == order.Status)">Cancelled</option>
+                            </select>
+                            <button type="submit" style="background-color:#00796B; color:white; border:none; padding:4px 8px;">
+                                Update
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(order.FileName))
+                        {
+                            <span>@order.FileName</span>
+                            <a asp-action="DownloadFile"
+                               asp-route-orderId="@order.RowKey"
+                               asp-route-fileName="@order.FileName"
+                               style="background-color:#00796B; color:white; padding:4px 8px; text-decoration:none; margin-left:4px;">
+                                Download
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No file</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit"
+                           asp-route-partitionKey="@order.PartitionKey"
+                           asp-route-rowKey="@order.RowKey"
+                           style="background-color:#00796B; color:white; border:none; padding:4px 8px; text-decoration:none; margin-right:4px;">
+                            Edit
+                        </a>
+
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="partitionKey" value="@order.PartitionKey" />
+                            <input type="hidden" name="rowKey" value="@order.RowKey" />
+                            <button type="submit" style="background-color:#00796B; color:white; border:none; padding:4px 8px;">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,49 @@
+﻿@model LKcosmetics_CLDV6212_POE.Models.Order
+
+<h1>Edit Order</h1>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="PartitionKey" />
+    <input type="hidden" asp-for="RowKey" />
+
+    <div class="mb-3">
+        <label asp-for="CustomerId" class="form-label"></label>
+        <input asp-for="CustomerId" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="OrderDate" class="form-label"></label>
+        <input asp-for="OrderDate" type="date" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="TotalAmount" class="form-label"></label>
+        <input asp-for="TotalAmount" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Pending" selected="@("Pending" == Model.Status)">Pending</option>
+            <option value="Processing" selected="@("Processing" == Model.Status)">Processing</option>
+            <option value="Completed" selected="@("Completed" == Model.Status)">Completed</option>
+            <option value="Cancelled" selected="@("Cancelled" == Model.Status)">Cancelled</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Current File</label>
+        @if (!string.IsNullOrEmpty(Model.FileName))
+        {
+            <span>@Model.FileName</span>
+        }
+        else
+        {
+            <span class="text-muted">No file</span>
+        }
+    </div>
+    <div class="mb-3">
+        <label>Upload New File</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
